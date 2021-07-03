@@ -2,9 +2,7 @@
  
 add([
   sprite("bg"),
-  scale(width() / 2, height() / 2),
   text(`${args.score}`, 128),
-  pos(width() / 2, height() / 2),
   origin("center"),
 ]);
 keyPress("space", () => {
