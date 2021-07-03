@@ -69,7 +69,7 @@ add([
 scene("main", (args = {}) => {
 const PIPE_MIN_HEIGHT = 4;
 const JUMP_FORCE = 320;
-const SPEED = 69420;
+const SPEED = 420;
 
 gravity(1200);
 
@@ -109,11 +109,11 @@ keyPress("space", () => {
 function spawnBonk() {
 
   const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT);
-  const h2 = h1 * 2;
+  const h2 = h1 + 13;
 
   add([
     sprite("bonk"),
-    scale(.006),
+    scale(.1),
     origin("botleft"),
     pos(width(), h1),
     "bonk",
