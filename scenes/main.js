@@ -44,7 +44,7 @@ function spawnBonk() {
 
   add([
     sprite("bonk"),
-    scale(.01),
+    scale(.008),
     origin("botleft"),
     pos(width(), h1),
     "bonk",
