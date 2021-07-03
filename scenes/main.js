@@ -1,5 +1,4 @@
-const PIPE_OPEN = 2;
-const PIPE_MIN_HEIGHT = 20;
+const PIPE_MIN_HEIGHT = 4;
 const JUMP_FORCE = 320;
 const SPEED = 69;
 
@@ -14,6 +13,7 @@ layers([
 add([
 	sprite("ez"),
 	scale(width() / 240, height() / 240),
+  origin("center"),
 	layer("ez"),
 ]);
 
@@ -40,25 +40,15 @@ keyPress("space", () => {
 
 function spawnBonk() {
 
-  const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT - PIPE_OPEN);
-  const h2 = h1 + PIPE_OPEN;
+  const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT);
+  const h2 = h1 - 10;
 
   add([
     sprite("bonk"),
-    scale(.01),
+    scale(.006),
     origin("botleft"),
     pos(width(), h1),
     "bonk",
-  ]);
-
-  add([
-    sprite("bonk"),
-    scale(.01),
-    origin("botleft"),
-    scale(1, -1),
-    pos(width(), h2),
-    "bonk",
-    { passed: false, },
   ]);
 
 }
@@ -74,7 +64,9 @@ ape.collides("bonk", () => {
 action("bonk", (p) => {
   p.move(-SPEED, 0);
 
-  if (p.pos.x + p.width <= ape.pos.x && p.passed === false) {
+  if (p.pos.x <= ape.pos.x) {
+    score.value++;
+    score.text = score.value;
     addScore();
     p.passed = true;
   }
