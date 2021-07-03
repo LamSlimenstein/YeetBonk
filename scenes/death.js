@@ -2,7 +2,7 @@
  
 add([
   sprite("bg"),
-  scale(.420),
+  scale((width() / 2, height() / 2) * 4),
   text(`${args.score}`, 128),
   pos(width() / 2, height() / 2),
   origin("center"),

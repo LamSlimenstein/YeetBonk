@@ -49,7 +49,7 @@ scene("death", (args = {}) => {
  
 add([
   sprite("bg"),
-  scale(.420),
+  scale((width() / 2, height() / 2) * 4),
   text(`${args.score}`, 128),
   pos(width() / 2, height() / 2),
   origin("center"),
@@ -167,7 +167,7 @@ function addScore() {
 scene("ready", (args = {}) => {
 add([
   sprite("adam"),
-  scale(.420),
+  scale(2),
   text(`ready?`, 64),
   pos(width() / 2, height() / 2),
   origin("center"),
