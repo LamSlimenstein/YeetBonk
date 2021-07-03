@@ -1,6 +1,6 @@
 const PIPE_MIN_HEIGHT = 4;
 const JUMP_FORCE = 320;
-const SPEED = 69;
+const SPEED = 420;
 
 gravity(1200);
 
