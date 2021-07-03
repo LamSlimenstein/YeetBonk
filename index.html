@@ -49,7 +49,7 @@ scene("death", (args = {}) => {
  
 add([
   sprite("bg"),
-  scale((width() / 2, height() / 2) * 4),
+  scale(width() / 2, height() / 2),
   text(`${args.score}`, 128),
   pos(width() / 2, height() / 2),
   origin("center"),
@@ -81,6 +81,7 @@ layers([
 
 add([
 	sprite("ez"),
+  pos(width() / 2, height() / 2),
   origin("center"),
 	layer("ez"),
 ]);

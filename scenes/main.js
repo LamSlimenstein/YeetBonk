@@ -12,6 +12,7 @@ layers([
 
 add([
 	sprite("ez"),
+  pos(width() / 2, height() / 2),
   origin("center"),
 	layer("ez"),
 ]);
