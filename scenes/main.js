@@ -12,14 +12,12 @@ layers([
 
 add([
 	sprite("ez"),
-	scale(width() / 240, height() / 240),
   origin("center"),
 	layer("ez"),
 ]);
 
 const ape = add([
   sprite("GreatApev0"),
-  scale(.3),
   pos(50, 0),
   body(),
 ]);
@@ -41,7 +39,7 @@ keyPress("space", () => {
 function spawnBonk() {
 
   const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT);
-  const h2 = h1 - 10;
+  const h2 = h1 * 2;
 
   add([
     sprite("bonk"),
