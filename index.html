@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>kaboom</title>
+  <meta charset="utf-8">
+  <style>
+    * {
+      margin: 0;
+    }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+<script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
+<script src="https://kaboomjs.com/lib/0.5.0/plugins/aseprite.js"></script>
+<script src="https://kaboomjs.com/lib/0.5.0/plugins/pedit.js"></script>
+<script src="https://kaboomjs.com/pub/legacy/kbmsprite.js"></script>
+
+  <script>
+
+kaboom({
+  ...{"fullscreen":true,"width":240,"height":240,"scale":2,"startScene":"main","version":"0.5.0","clearColor":null},
+  global: true,
+  plugins: [ peditPlugin, asepritePlugin, kbmspritePlugin ],
+});
+loadSprite("1121", "sprites/1121.png");
+loadSprite("GreatApev0", "sprites/GreatApev0.png");
+loadSprite("bonk", "sprites/bonk.png");
+loadSprite("ez", "sprites/ez.png");
+loadSound("hit", "sounds/hit.mp3");
+loadSound("score", "sounds/score.mp3");
+loadSound("wooosh", "sounds/wooosh.mp3");
+scene("death", (args = {}) => {
+add([
+  text(`${args.score}`, 64),
+  pos(width() / 2, height() / 2),
+  origin("center"),
+]);
+keyPress("space", () => {
+  go("main");
+});
+});
+scene("main", (args = {}) => {
+const PIPE_OPEN = 2;
+const PIPE_MIN_HEIGHT = 20;
+const JUMP_FORCE = 320;
+const SPEED = 69;
+
+gravity(1200);
+
+layers([
+	"ez",
+	"obj",
+	"ui",
+], "obj");
+
+add([
+	sprite("ez"),
+	scale(width() / 240, height() / 240),
+	layer("ez"),
+]);
+
+const ape = add([
+  sprite("GreatApev0"),
+  scale(.3),
+  pos(50, 0),
+  body(),
+]);
+
+ape.action(() => {
+	if (ape.pos.y >= height()) {
+		// switch to "death" scene
+		go("death", {
+			score: score.value,
+		});
+	}
+});
+
+keyPress("space", () => {
+  ape.jump(JUMP_FORCE);
+  play("wooosh");
+});
+
+function spawnBonk() {
+
+  const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT - PIPE_OPEN);
+  const h2 = h1 + PIPE_OPEN;
+
+  add([
+    sprite("bonk"),
+    scale(.01),
+    origin("botleft"),
+    pos(width(), h1),
+    "bonk",
+  ]);
+
+  add([
+    sprite("bonk"),
+    scale(.01),
+    origin("botleft"),
+    scale(1, -1),
+    pos(width(), h2),
+    "bonk",
+    { passed: false, },
+  ]);
+
+}
+
+
+ape.collides("bonk", () => {
+  go("death", {
+    score: score.value,
+  });
+  play("hit");
+});
+
+action("bonk", (p) => {
+  p.move(-SPEED, 0);
+
+  if (p.pos.x + p.width <= ape.pos.x && p.passed === false) {
+    addScore();
+    p.passed = true;
+  }
+
+  if (p.pos.x < -width() / 2) {
+    destroy(p);
+  }
+});
+
+loop(1, () => {
+  spawnBonk();
+});
+
+const score = add([
+  text("0", 16),
+  layer("ui"),
+  pos(9, 9),
+  {
+    value: 0,
+  },
+]);
+
+function addScore() {
+  score.value++;
+  score.text = score.value;
+  play("score");
+}
+});
+start("main");
+
+  </script>
+</body>
+
+</html>
