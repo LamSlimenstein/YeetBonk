@@ -3,7 +3,7 @@
 add([
   sprite("bg"),
   text(`${args.score}`, 128),
-  origin("topleft"),
+  origin("center"),
 ]);
 keyPress("space", () => {
   go("ready");
