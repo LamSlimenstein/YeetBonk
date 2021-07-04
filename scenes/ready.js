@@ -9,3 +9,6 @@ keyPress("space", () => {
   go("main");
 });
 
+mouseClick( () => {
+  go("main");
+});

@@ -37,6 +37,11 @@ keyPress("space", () => {
   play("wooosh");
 });
 
+mouseClick( () => {
+  ape.jump(JUMP_FORCE);
+  play("wooosh");
+});
+
 function spawnBonk() {
 
   const h1 = rand(PIPE_MIN_HEIGHT, height() - PIPE_MIN_HEIGHT);

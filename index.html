@@ -45,14 +45,17 @@ loadSound("hit", "sounds/hit.mp3");
 loadSound("score", "sounds/score.mp3");
 loadSound("wooosh", "sounds/wooosh.mp3");
 scene("death", (args = {}) => {
-
- 
 add([
   sprite("bg"),
   text(`${args.score}`, 128),
+  pos(width() / 2, height() / 2),
   origin("center"),
 ]);
 keyPress("space", () => {
+  go("ready");
+});
+
+mouseClick( () => {
   go("ready");
 });
 
@@ -100,6 +103,11 @@ ape.action(() => {
 });
 
 keyPress("space", () => {
+  ape.jump(JUMP_FORCE);
+  play("wooosh");
+});
+
+mouseClick( () => {
   ape.jump(JUMP_FORCE);
   play("wooosh");
 });
@@ -173,7 +181,9 @@ keyPress("space", () => {
   go("main");
 });
 
-
+mouseClick( () => {
+  go("main");
+});
 });
 start("ready");
 
